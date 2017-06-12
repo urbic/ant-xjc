@@ -1,8 +1,8 @@
 # **ant-xjc**
 
-This package contains optional **xjc** task for **Apache Ant**.
+This package contains optional **xjc** task for **Apache Ant™**.
 
-[Apache Ant™](http://ant.apache.org/) is a Java-based build tool.
+[Apache Ant](http://ant.apache.org/) is a Java-based build tool.
 
 ## Description
 
@@ -109,7 +109,7 @@ Suppress generation of package level annotations (`**/package-info.java`).
 
 * **`schema`**
 Specify schema. For each directory specified, all schema files in it will be
-compiled.  This element can contain arbitrary _resource collection_ elements.
+compiled. This element can contain arbitrary _resource collection_ elements.
 
 ```xml
 <xjc destdir="${target.src.test.java}">
@@ -120,7 +120,9 @@ compiled.  This element can contain arbitrary _resource collection_ elements.
 ```
 
 * **`binding`**
-Specify external bindings files. If a directory is given, `**/*.xjb` is searched.
+Specify external bindings files. For each directory specified, all bindings
+files (`**/*.xjb`) in it will be searched. This element can contain arbitrary
+_resource collection_ elements.
 
 ```xml
 <xjc destdir="${target.src.test.java}">

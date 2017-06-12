@@ -11,24 +11,18 @@
 		<exec executable="pandoc">
 			<arg value="-M"/>
 			<arg value="title=Optional xjc task for ant"/>
-			<arg value="-M"/>
-			<arg value="author=Anton Shvetz"/>
-			<arg value="-M"/>
-			<arg value="date=${TODAY}"/>
-			<arg value="-V"/>
-			<arg value="colorlinks"/>
-			<arg value="-V"/>
-			<arg value="mainfont=Liberation Serif"/>
+			<arg value="-Mauthor=Anton Shvetz"/>
+			<arg value="-Mdate=${TODAY}"/>
+			<arg value="-Vcolorlinks"/>
+			<arg value="-Vmainfont=Liberation Serif"/>
 			<arg value="--reference-links"/>
-			<arg value="--latex-engine"/>
-			<arg value="lualatex"/>
-			<arg value="-V"/>
-			<arg value="papersize=A4"/>
-			<arg value="-f"/>
-			<arg value="markdown_github"/>
+			<arg value="--latex-engine=lualatex"/>
+			<arg value="-Vpapersize=a4"/>
+			<arg value="-Vgeometry=margin=1in"/>
+			<arg value="--toc"/>
+			<arg value="-fmarkdown_github"/>
 			<arg value="-s"/>
-			<arg value="-o"/>
-			<arg value="${target.doc}/${project.name}.pdf"/>
+			<arg value="-o${target.doc}/${project.name}.pdf"/>
 			<arg value="README.md"/>
 		</exec>
 	</target>
