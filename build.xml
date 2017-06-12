@@ -118,17 +118,17 @@
 			<arg value="stash"/>
 			<arg value="create"/>
 		</exec>
-		<condition property="git.stashname" value="HEAD">
-			<length string="${git.stashname}" length="0"/>
+		<condition property="git.object" value="HEAD" else="${git.stashname}">
+			<length string="${git.stashname}" when="eq" length="0"/>
 		</condition>
-		<echo>${git.stashname}</echo>
+		<echo message="${git.stashname}"/>
 		<exec executable="git">
 			<arg value="archive"/>
 			<arg value="--prefix"/>
 			<arg value="${project.name}-${project.version}/"/>
 			<arg value="--output"/>
 			<arg value="${target}/${project.name}-${project.version}.tar.gz"/>
-			<arg value="${git.stashname}"/>
+			<arg value="${git.object}"/>
 			<arg value="--"/>
 			<arg value="build.xml"/>
 			<arg value="src"/>
