@@ -34,6 +34,26 @@
 			</schema>
 		</xjc>
 		
+		<echo>Testcase: schema as directory</echo>
+		<xjc
+			verbose="yes"
+			destdir="${target.src.test.java}"
+			failonerror="false"
+			schema="${src.test.xsd}"
+			>
+		</xjc>
+
+		<echo>Testcase: schema as dirset</echo>
+		<xjc
+			verbose="yes"
+			destdir="${target.src.test.java}"
+			failonerror="false"
+			>
+			<schema>
+				<dirset dir="${src.test}" includes="xsd"/>
+			</schema>
+		</xjc>
+
 		<echo>Testcase: non-existent schema</echo>
 		<xjc
 			verbose="yes"

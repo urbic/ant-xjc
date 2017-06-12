@@ -25,96 +25,99 @@ This package contains optional **xjc** task for **Apache Ant**.
 ### Attributes
 
 * `schema`
-schema (file/URL/dir/jar)
+Schema (file/URL/dir/jar).
 
 * `destdir`
-generated files will go into this directory
+Generated files will go into this directory.
 
 * `package`
-specifies the target package
+Specifies the target package.
 
 * `catalog`
-specify catalog files to resolve external entity references support TR9401,
-XCatalog, and OASIS XML Catalog format
+Specify catalog files to resolve external entity references support TR9401,
+XCatalog, and OASIS XML Catalog format.
 
 * `classpath`
-specify where to find user class files
+Specify where to find user class files.
 
 * `extension`
-allow vendor extensions — do not strictly follow the Compatibility Rules and App E.2 from the JAXB Spec
+Allow vendor extensions — do not strictly follow the Compatibility Rules and App E.2 from the JAXB Spec.
 
 * `enableIntrospection`
-enable correct generation of Boolean getters/setters to enable Bean Introspection apis
+Enable correct generation of Boolean getters/setters to enable Bean Introspection apis.
 
 * `readonly`
-generated files will be in read-only mode
+Generated files will be in read-only mode.
 
 * `httpProxy`
-set HTTP/HTTPS proxy. Format is `[user[:password]@]proxyHost:proxyPort`
+Set HTTP/HTTPS proxy. Format is `[user[:password]@]proxyHost:proxyPort`.
 
 * `httpProxyFile`
-works like `httpproxy` but takes the argument in a file to protect password
+Works like `httpproxy` but takes the argument in a file to protect password.
 
 * `format`
 	* `"xmlschema"`
-	treat input as W3C XML Schema (default)
+	Treat input as W3C XML Schema (default).
 
     * `"relaxng"`
-	treat input as RELAX NG (experimental, unsupported)
+	Treat input as RELAX NG (experimental, unsupported).
 	
 	* `"relaxng-compact"`
-	treat input as RELAX NG compact syntax (experimental, unsupported)
+	Treat input as RELAX NG compact syntax (experimental, unsupported).
 	
 	* `"dtd"`
-	treat input as XML DTD (experimental, unsupported)
+	Treat input as XML DTD (experimental, unsupported).
 	
 	* `"wsdl"`
-	treat input as WSDL and compile schemas inside it (experimental, unsupported)
+	Treat input as WSDL and compile schemas inside it (experimental, unsupported).
 
 * `contentForWildcard`
-generates content property for types with multiple `xs:any` derived elements
+generates content property for types with multiple `xs:any` derived elements.
 
 * `quiet`
-suppress compiler output
+Suppress compiler output.
 
 * `verbose`
-be extra verbose
+Be extra verbose.
 
 * `failonerror`
-indicates whether compilation errors will fail the build; defaults to `"true"`
+Indicates whether compilation errors will fail the build; defaults to `"true"`.
 
 * `target`
-behave like XJC 2.0 or 2.1 and generate code that doesn’t use any 2.2 features
+Behave like XJC 2.0 or 2.1 and generate code that doesn’t use any 2.2 features.
+Possible values are:
 	* `"2.0"`
 	* `"2.1"`
 
 * `noHeader`
-suppress generation of a file header with timestamp
+Suppress generation of a file header with timestamp.
 
 * `noValidate`
-do not perform strict validation of the input schema(s)
+Do not perform strict validation of the input schema(s).
 
 * `enableIntrospection`
-enable correct generation of Boolean getters/setters to enable Bean
-Introspection apis
+Enable correct generation of Boolean getters/setters to enable Bean
+Introspection apis.
 
 * `disableXmlSecurity`
-disables XML security features when parsing XML documents
+Disables XML security features when parsing XML documents.
 
 * `noPackageAnnotations`
-suppress generation of package level annotations (`**/package-info.java`)
+Suppress generation of package level annotations (`**/package-info.java`).
 
 ### Nested elements
 
 * **`schema`**
-
 Can contain arbitrary _resource collection_ elements.
 
 ```xml
-<xjc>
+<xjc destdir="${target.src.test.java}">
 	<fileset dir="${src.main.xsd}" includes="**/*.xsd"/>
 </xjc>
 ```
+
+* **`binding`**
+Specify external bindings files. If a directory is given, `**/*.xjb` is searched.
 
 ## License
 

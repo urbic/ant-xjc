@@ -269,6 +269,12 @@ public class Xjc
 				resources.add(item);
 		}
 
+		public void addConfiguredDirSet(final org.apache.tools.ant.types.DirSet dirSet)
+		{
+			for(org.apache.tools.ant.types.Resource item: dirSet)
+				resources.add(item);
+		}
+
 		private java.util.ArrayList<org.apache.tools.ant.types.Resource> resources
 			=new java.util.ArrayList<org.apache.tools.ant.types.Resource>();
 	}
