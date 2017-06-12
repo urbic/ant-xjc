@@ -1,8 +1,8 @@
 # **ant-xjc**
 
-This package contains optional **xjc** task for Apache Ant.
+This package contains optional **xjc** task for **Apache Ant**.
 
-[**Apache Ant**](http://ant.apache.org/) is a Java-based build tool.
+[Apache Ant](http://ant.apache.org/) is a Java-based build tool.
 
 ## Description
 

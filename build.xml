@@ -24,11 +24,10 @@
 	<property name="datadir.java" location="${datadir}/java"/>
 	<property name="datadir.javadoc" location="${datadir}/javadoc"/>
 	<property name="datadir.javadoc.java" location="${datadir.javadoc}/java"/>
-	<property name="jvm.home" location="/usr/lib64/jvm"/>
 	<path id="classpath.main">
 		<pathelement path="${target.lib}/${project.name}.jar"/>
 		<pathelement path="${datadir.java}/ant.jar"/>
-		<pathelement path="${jvm.home}/java/lib/tools.jar"/>
+		<pathelement path="${java.home}/../lib/tools.jar"/>
 	</path>
 
 	<!-- Import supplementary Ant projects -->

@@ -25,14 +25,17 @@ Group:			Development/Tools/Building
 Source:			%{name}-%{version}.tar.xz
 BuildRequires:	ant
 BuildRequires:	java-devel >= 1.8.0
+BuildRequires:	java-1_8_0-openjdk-devel >= 1.8.0
 BuildRequires:	java-javadoc >= 1.8.0
 BuildRequires:	pandoc
 BuildRequires:	texlive-collection-luatex
 BuildRequires:	texlive-collection-latex
+BuildRequires:	texlive-fancyvrb
 BuildRequires:	liberation-fonts
 BuildRequires:	texlive-euenc
 Provides:		config(ant-%{name})
 Requires:		java >= 1.8.0
+Requires:		java-1_8_0-openjdk-devel >= 1.8.0
 BuildRoot:		%{_tmppath}/%{name}-%{version}-build
 BuildArch:		noarch
 
@@ -73,6 +76,6 @@ echo "%{name} ant/%{name}" > %{buildroot}%{_sysconfdir}/ant.d/%{name}
 %{_javadir}/ant/*.jar
 %{_datadir}/ant/lib/%{name}.jar
 %config %{_sysconfdir}/ant.d/*
-%{_docdir}/%{name}/*
+%{_docdir}/%{name}
 
 %changelog
