@@ -164,7 +164,9 @@
 			verbose="yes"
 			destdir="${target.src.test.java}"
 			>
-			<schema dir="${src.test.xsd}" includes="*.xsd"/>
+			<schema>
+				<fileset dir="${src.test.xsd}" includes="*.xsd"/>
+			</schema>
 		</xjc>
 	</target>
 

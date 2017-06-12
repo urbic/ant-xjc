@@ -119,7 +119,8 @@ public class Xjc
 
 		try
 		{
-			com.sun.tools.internal.xjc.XJCFacade.main(args);
+			//com.sun.tools.internal.xjc.XJCFacade.main(args);
+			com.sun.tools.internal.xjc.Driver.run(args, System.out, System.out);
 		}
 		catch(final Throwable e)
 		{
@@ -223,37 +224,42 @@ public class Xjc
 		markGenerated;
 
 	public static class Schema
-		//implements org.apache.tools.ant.types.ResourceCollection
-		extends org.apache.tools.ant.types.FileSet
+		implements org.apache.tools.ant.types.ResourceCollection
+		//extends org.apache.tools.ant.types.
+		//extends org.apache.tools.ant.types.DataType
 	{
 		public Schema()
 		{
 		}
 
-		/*
 		public boolean isFilesystemOnly()
 		{
 			return false;
 		}
-		*:
 
-		/*public void setValue(final String value)
+		public int size()
 		{
-			this.value=value;
+			return resources.size();
 		}
 
-		public String getValue()
+		public java.util.Iterator<org.apache.tools.ant.types.Resource> iterator()
 		{
-			return value;
+			return resources.iterator();
+		}
+	
+		public void addConfiguredFileSet(final org.apache.tools.ant.types.FileSet fileSet)
+		{
+			for(org.apache.tools.ant.types.Resource item: fileSet)
+				resources.add(item);
 		}
 
-		private String value;
-		*/
+		private java.util.ArrayList<org.apache.tools.ant.types.Resource> resources
+			=new java.util.ArrayList<org.apache.tools.ant.types.Resource>();
 	}
 
 	public void addConfiguredSchema(final Schema schema)
 	{
-		for(Object item: schema)
+		for(org.apache.tools.ant.types.Resource item: schema)
 			this.schema.add(item.toString());
 	}
 
