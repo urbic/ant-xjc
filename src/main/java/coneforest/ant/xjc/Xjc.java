@@ -113,8 +113,7 @@ public class Xjc
 		}
 
 		// Schema
-		if(schema!=null)
-			argList.add(schema);
+		argList.addAll(schema);
 
 		final String[] args=argList.toArray(new String[0]);
 
@@ -124,12 +123,13 @@ public class Xjc
 		}
 		catch(final Throwable e)
 		{
+			e.printStackTrace();
 		}
 	}
 
 	public void setDestdir(final String value)	{ destdir=value; }
 
-	public void setSchema(final String value)	{ schema=value; }
+	public void setSchema(final String value)	{ this.schema.add(value); }
 
 	public void setClasspath(final String value)	{ classpath=value; }
 
@@ -181,6 +181,8 @@ public class Xjc
 
 	public void setRemoveOldInput(final String value)	{ removeOldInput=value; }
 
+	// Nested elements
+
 	public Arg createArg()
 	{
 		final Arg arg=new Arg();
@@ -191,9 +193,10 @@ public class Xjc
 	private final java.util.ArrayList<Arg> argList
 		=new java.util.ArrayList<Arg>();
 
+	private java.util.ArrayList<String> schema=new java.util.ArrayList<String>();
+
 	private String
 		destdir,
-		schema,
 		binding,
 		_package,
 		target,
@@ -219,13 +222,22 @@ public class Xjc
 		disableXmlSecurity,
 		markGenerated;
 
-	public class Schema
+	public static class Schema
+		//implements org.apache.tools.ant.types.ResourceCollection
+		extends org.apache.tools.ant.types.FileSet
 	{
 		public Schema()
 		{
 		}
 
-		public void setValue(final String value)
+		/*
+		public boolean isFilesystemOnly()
+		{
+			return false;
+		}
+		*:
+
+		/*public void setValue(final String value)
 		{
 			this.value=value;
 		}
@@ -236,6 +248,13 @@ public class Xjc
 		}
 
 		private String value;
+		*/
+	}
+
+	public void addConfiguredSchema(final Schema schema)
+	{
+		for(Object item: schema)
+			this.schema.add(item.toString());
 	}
 
 	public class Binding

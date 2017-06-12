@@ -152,11 +152,19 @@
 			/>
 		
 		<mkdir dir="${target.src.test.java}"/>
+		<echo>Testcase: schema in attribute</echo>
 		<xjc
 			verbose="yes"
 			schema="${src.test.xsd}/test-1.xsd"
 			destdir="${target.src.test.java}"
 			>
+		</xjc>
+		<echo>Testcase: nested schema</echo>
+		<xjc
+			verbose="yes"
+			destdir="${target.src.test.java}"
+			>
+			<schema dir="${src.test.xsd}" includes="*.xsd"/>
 		</xjc>
 	</target>
 
