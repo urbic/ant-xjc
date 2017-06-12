@@ -19,13 +19,18 @@ Name:           @obs.package.name@
 Version:		@obs.package.version@
 Release:		0
 License:		Zlib
-Summary:		Optional Xjc task for ant
+Summary:		Optional xjc task for ant
 Url:			https://github.com/urbic/%{name}
 Group:			Development/Tools/Building
 Source:			%{name}-%{version}.tar.xz
 BuildRequires:	ant
 BuildRequires:	java-devel >= 1.8.0
 BuildRequires:	java-javadoc >= 1.8.0
+BuildRequires:	pandoc
+BuildRequires:	texlive-collection-luatex
+BuildRequires:	texlive-collection-latex
+BuildRequires:	liberation-fonts
+BuildRequires:	texlive-euenc
 Provides:		config(ant-%{name})
 Requires:		java >= 1.8.0
 BuildRoot:		%{_tmppath}/%{name}-%{version}-build
@@ -34,7 +39,7 @@ BuildArch:		noarch
 %description
 Apache Ant is a Java-based build tool.
 
-This package contains optional Xjc tasks for Apache Ant.
+This package contains optional xjc task for Apache Ant.
 
 %prep
 %setup -q
@@ -48,43 +53,26 @@ LANG=ru_RU.UTF-8 \
 	%{ant} test
 
 %install
-%{__install} -d %{buildroot}%{_javadir}
-%{__install} -d %{buildroot}%{_docdir}/%{name}{,-doc}
-%{__install} -m 644 target/lib/%{name}-%{version}.jar %{buildroot}%{_javadir}
-%{__cp} -P target/lib/%{name}.jar %{buildroot}%{_javadir}
+%{__install} -d %{buildroot}%{_javadir}/ant
+%{__install} -d %{buildroot}%{_docdir}/%{name}
+%{__install} -m 644 target/lib/%{name}-%{version}.jar %{buildroot}%{_javadir}/ant
+%{__cp} -P target/lib/%{name}.jar %{buildroot}%{_javadir}/ant
 %{__install} -m 644 target/doc/{README,LICENSE,AUTHORS} %{buildroot}%{_docdir}/%{name}
 %{__install} -d %{buildroot}%{_datadir}/ant/lib
-%{__ln_s} ../../java/%{name}.jar %{buildroot}%{_datadir}/ant/lib/%{name}.jar
+%{__ln_s} ../../java/ant/%{name}.jar %{buildroot}%{_datadir}/ant/lib/%{name}.jar
 %{__install} -d %{buildroot}%{_sysconfdir}/ant.d
-echo "%{name} ant/ant-%{name}" > %{buildroot}%{_sysconfdir}/ant.d/%{name}
+echo "%{name} ant/%{name}" > %{buildroot}%{_sysconfdir}/ant.d/%{name}
+%{__install} -d %{buildroot}%{_docdir}/%{name}
+%{__install} -m 644 target/doc/%{name}.pdf %{buildroot}%{_docdir}/%{name}
 
 %clean
 %{__rm} -rf %{buildroot}
 
 %files
 %defattr(-,root,root)
-%{_javadir}/*.jar
-%dir %{_datadir}/%{name}
-%dir %{_datadir}/%{name}/site
-%dir %{_datadir}/%{name}/%{version}
-%{_datadir}/%{name}/%{version}/*
-%{_datadir}/%{name}/current
-%dir %{_datadir}/vim
-%dir %{_datadir}/vim/site
-%dir %{_datadir}/vim/site/ftdetect
-%dir %{_datadir}/vim/site/syntax
-%{_datadir}/mime/packages/%{name}.xml
-%{_datadir}/ant/lib/ant-%{name}.jar
-%{_sysconfdir}/ant.d/*
-%{_mandir}/man1/*
-%doc README LICENSE AUTHORS
+%{_javadir}/ant/*.jar
+%{_datadir}/ant/lib/%{name}.jar
+%config %{_sysconfdir}/ant.d/*
+%{_docdir}/%{name}/*
 
-%files doc
-%defattr(-,root,root)
-%{_docdir}/%{name}-doc
-
-%files javadoc
-%defattr(0644,root,root,0755)
-%{_javadocdir}/%{name}
-
-#%%changelog
+%changelog

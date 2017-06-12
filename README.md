@@ -1,12 +1,38 @@
-# ant-xjc
+# **ant-xjc**
 
-## Attributes
+This package contains optional **xjc** task for Apache Ant.
+
+[**Apache Ant**](http://ant.apache.org/) is a Java-based build tool.
+
+## Description
+
+### Usage
+
+```xml
+…
+<taskdef
+	name="xjc"
+	classname="coneforest.ant.xjc.Xjc"
+	classpathref="classpath.main"
+	/>
+<xjc
+	verbose="yes"
+	schema="${src.main.xsd}/myschema.xsd"
+	destdir="${target.src.main.java}"
+	/>
+…
+```
+
+### Attributes
+
+* `schema`
+schema (file/URL/dir/jar)
 
 * `destdir`
 generated files will go into this directory
 
 * `extension`
-allow vendor extensions - do not strictly follow the Compatibility Rules and App E.2 from the JAXB Spec
+allow vendor extensions — do not strictly follow the Compatibility Rules and App E.2 from the JAXB Spec
 
 * `enableIntrospection`
 enable correct generation of Boolean getters/setters to enable Bean Introspection apis
@@ -47,7 +73,7 @@ works like `httpproxy` but takes the argument in a file to protect password
 	treat input as WSDL and compile schemas inside it (experimental, unsupported)
 
 * `contentForWildcard`
-generates content property for types with multiple xs:any derived elements
+generates content property for types with multiple `xs:any` derived elements
 
 * `quiet`
 suppress compiler output
@@ -76,4 +102,14 @@ disables XML security features when parsing XML documents
 * `noPackageAnnotations`
 suppress generation of package level annotations (`**/package-info.java`)
 
-## Nested elements
+### Nested elements
+
+_Not implemented yet._
+
+## License
+
+This software and documentation are released under the [zlib/png](LICENSE) license.
+
+## Author
+[Anton Shvetz](mailto:tz@sectorb.msk.ru?subject=ant-xjc)
+

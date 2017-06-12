@@ -2,16 +2,21 @@
 <project name="ant-xjc" default="jar">
 
 	<property name="project.name" value="${ant.project.name}"/>
-	<property name="project.version" value="0.0"/>
+	<property name="project.version" value="0.1"/>
 	<property name="src" location="src"/>
 	<property name="src.main" location="${src}/main"/>
 	<property name="src.main.java" location="${src.main}/java"/>
 	<property name="src.main.xsd" location="${src.main}/xsd"/>
 	<property name="src.ant" location="${src}/ant"/>
+	<property name="src.test" location="${src}/test"/>
+	<property name="src.test.xsd" location="${src.test}/xsd"/>
 	<property name="target" location="target"/>
 	<property name="target.classes" location="${target}/classes"/>
 	<property name="target.lib" location="${target}/lib"/>
 	<property name="target.src" location="${target}/src"/>
+	<property name="target.src.test" location="${target.src}/test"/>
+	<property name="target.src.test.java" location="${target.src.test}/java"/>
+	<property name="target.doc" location="${target}/doc"/>
 	<property name="target.src.main" location="${target.src}/main"/>
 	<property name="target.src.main.java" location="${target.src.main}/java"/>
 	<property name="target.obs" value="${target}/obs"/>
@@ -19,24 +24,16 @@
 	<property name="datadir.java" location="${datadir}/java"/>
 	<property name="datadir.javadoc" location="${datadir}/javadoc"/>
 	<property name="datadir.javadoc.java" location="${datadir.javadoc}/java"/>
+	<property name="jvm.home" location="/usr/lib64/jvm"/>
 	<path id="classpath.main">
 		<pathelement path="${target.lib}/${project.name}.jar"/>
 		<pathelement path="${datadir.java}/ant.jar"/>
-		<pathelement path="/usr/lib64/jvm/java-1.8.0-openjdk-1.8.0/lib/tools.jar"/>
+		<pathelement path="${jvm.home}/java/lib/tools.jar"/>
 	</path>
 
 	<!-- Import supplementary Ant projects -->
 	<import file="${src.ant}/obs.ant"/>
-
-	<!--taskdef name="xjc" classname="com.sun.tools.xjc.XJCTask">
-		<classpath>
-			<!- -fileset dir="../../lib" includes="*.jar" excludes="ant.jar"/- ->
-			<fileset dir="../../..">
-				<include name="./jaxb-xjc-2.0.5.jar"/>
-				<include name="jwsdp-shared/lib/**/*.jar"/>
-			</fileset>
-		</classpath>
-	</taskdef-->
+	<import file="${src.ant}/docs.ant"/>
 
 	<target name="compile"
 		description="Compile sources"
@@ -75,6 +72,15 @@
 			link="${target.lib}/${project.name}.jar"
 			overwrite="true"
 			/>
+	</target>
+
+	<target name="build"
+		description="Build project"
+		depends="jar,docs"
+		>
+		<copy todir="${target.doc}">
+			<fileset dir="." includes="README LICENSE AUTHORS"/>
+		</copy>
 	</target>
 
 	<target name="clean" description="Clean build directory">
@@ -120,6 +126,7 @@
 			<arg value="build.xml"/>
 			<arg value="src"/>
 			<arg value="README"/>
+			<arg value="README.md"/>
 			<arg value="LICENSE"/>
 			<arg value="AUTHORS"/>
 		</exec>
@@ -133,10 +140,12 @@
 			classname="coneforest.ant.xjc.Xjc"
 			classpathref="classpath.main"
 			/>
+		
+		<mkdir dir="${target.src.test.java}"/>
 		<xjc
-			package="MAKAAK"
 			verbose="yes"
-			schema="makaak.xsd"
+			schema="${src.test.xsd}/test-1.xsd"
+			destdir="${target.src.test.java}"
 			>
 		</xjc>
 	</target>

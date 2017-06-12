@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<project name="htmldocs" basedir=".">
+
+	<target name="docs" depends="docs.pdf"/>
+
+	<target name="docs.pdf">
+		<mkdir dir="${target.doc}"/>
+		<tstamp>
+			<format property="TODAY" pattern="yyyy.MM.dd" locale="en,GB"/>
+		</tstamp>
+		<exec executable="pandoc">
+			<arg value="-M"/>
+			<arg value="title=Optional xjc task for ant"/>
+			<arg value="-M"/>
+			<arg value="author=Anton Shvetz"/>
+			<arg value="-M"/>
+			<arg value="date=${TODAY}"/>
+			<arg value="-V"/>
+			<arg value="colorlinks"/>
+			<arg value="-V"/>
+			<arg value="mainfont=Liberation Serif"/>
+			<arg value="--reference-links"/>
+			<arg value="--latex-engine"/>
+			<arg value="lualatex"/>
+			<arg value="-V"/>
+			<arg value="papersize=A4"/>
+			<arg value="-f"/>
+			<arg value="markdown_github"/>
+			<arg value="-s"/>
+			<arg value="-o"/>
+			<arg value="${target.doc}/${project.name}.pdf"/>
+			<arg value="README.md"/>
+		</exec>
+	</target>
+
+</project>

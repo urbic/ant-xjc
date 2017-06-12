@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema
+	xmlns="http://www.w3.org/2001/XMLSchema"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:makaak="urn:coneforest:test-1"
+	targetNamespace="urn:coneforest:test-1"
+	elementFormDefault="qualified"
+	>
+
+	<element name="outer">
+		<complexType>
+			<sequence>
+				<element name="inner">
+					<complexType>
+						<attribute name="group" type="string"/>
+					</complexType>
+				</element>
+			</sequence>
+			<attribute name="id" type="string"/>
+		</complexType>
+	</element>
+
+</schema>
