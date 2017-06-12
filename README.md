@@ -108,16 +108,27 @@ Suppress generation of package level annotations (`**/package-info.java`).
 ### Nested elements
 
 * **`schema`**
-Can contain arbitrary _resource collection_ elements.
+Specify schema. For each directory specified, all schema files in it will be
+compiled.  This element can contain arbitrary _resource collection_ elements.
 
 ```xml
 <xjc destdir="${target.src.test.java}">
-	<fileset dir="${src.main.xsd}" includes="**/*.xsd"/>
+	<schema>
+		<fileset dir="${src.main.xsd}" includes="**/*.xsd"/>
+	</schema>
 </xjc>
 ```
 
 * **`binding`**
 Specify external bindings files. If a directory is given, `**/*.xjb` is searched.
+
+```xml
+<xjc destdir="${target.src.test.java}">
+	<binding>
+		<fileset dir="${src.main.xsd}" includes="**/*.xbj"/>
+	</binding>
+</xjc>
+```
 
 ## License
 
