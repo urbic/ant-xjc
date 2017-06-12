@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="obs" basedir=".">
+
+	<property name="obs.project.name" value="home:concyclic"/>
+	<property name="obs.package.name" value="${project.name}"/>
+	<property name="obs.package.version" value="${project.version}"/>
+	<property name="src.obs" location="${src}/obs"/>
+
+	<available
+		property="obs.dir.available"
+		file="${target.obs}/.osc"
+		/>
+
+	<target name="obs.checkout" unless="obs.dir.available">
+		<mkdir dir="${target.obs}"/>
+		<exec executable="osc">
+			<arg value="checkout"/>
+			<arg value="-o"/>
+			<arg value="${target.obs}"/>
+			<arg value="${obs.project.name}"/>
+			<arg value="${obs.package.name}"/>
+		</exec>
+	</target>
+
+	<target name="obs.copy.spec" depends="obs.checkout,dist.tar">
+		<copy todir="${target.obs}" filtering="true" overwrite="yes">
+			<fileset dir="${src.obs}"/>
+			<filterset>
+				<propertyset>
+					<propertyref name="obs.package.name"/>
+					<propertyref name="obs.package.version"/>
+				</propertyset>
+			</filterset>
+		</copy>
+		<copy todir="${target.obs}" overwrite="yes">
+			<fileset dir="${target}" includes="${project.name}-${project.version}.tar.gz"/>
+		</copy>
+	</target>
+
+	<target name="obs.add.spec" depends="obs.copy.spec">
+		<mkdir dir="${target.obs}"/>
+		<exec executable="osc" dir="${target.obs}">
+			<arg value="addremove"/>
+			<arg value="${project.name}-${project.version}.tar.gz"/>
+			<arg value="_service"/>
+			<arg value="${obs.package.name}.spec"/>
+		</exec>
+	</target>
+
+	<target name="obs.checkin" depends="obs.add.spec">
+		<mkdir dir="${target.obs}"/>
+		<exec outputproperty="git.last.message" executable="git">
+			<arg value="log"/>
+			<arg value="--pretty=%s"/>
+			<arg value="-1"/>
+		</exec>
+		<exec executable="osc" dir="${target.obs}">
+			<arg value="checkin"/>
+			<arg value="-v"/>
+			<arg value="-m"/>
+			<arg value="${git.last.message}"/>
+		</exec>
+	</target>
+
+	<target name="obs.build" depends="obs.add.spec">
+		<!--mkdir dir="${target.obs}"/-->
+		<exec executable="osc" dir="${target.obs}">
+			<arg value="build"/>
+			<arg value="${obs.build.distro}"/>
+			<arg value="x86_64"/>
+			<!--arg value="${obs.package.name}.dsc"/-->
+		</exec>
+		<!--exec executable="osc" dir="${target.obs}">
+			<arg value="build"/>
+			<arg value="- -clean"/>
+			<arg value="Fedora_24"/>
+			<arg value="x86_64"/>
+			<arg value="${obs.package.name}.spec"/>
+		</exec-->
+		<!--copy todir="${target.obs}" overwrite="yes">
+			<fileset dir="${target}" includes="${project.name}-${project.version}.tar.gz"/>
+		</copy>
+		<exec executable="osc" dir="${target.obs}">
+			<arg value="build"/>
+			<arg value="openSUSE_Leap_42.1"/>
+			<arg value="x86_64"/>
+			<arg value="${obs.package.name}.spec"/>
+		</exec-->
+	</target>
+
+</project>

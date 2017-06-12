@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="ant-xjc" default="jar">
+
+	<property name="project.name" value="${ant.project.name}"/>
+	<property name="project.version" value="0.0"/>
+	<property name="src" location="src"/>
+	<property name="src.main" location="${src}/main"/>
+	<property name="src.main.java" location="${src.main}/java"/>
+	<property name="src.main.xsd" location="${src.main}/xsd"/>
+	<property name="src.ant" location="${src}/ant"/>
+	<property name="target" location="target"/>
+	<property name="target.classes" location="${target}/classes"/>
+	<property name="target.lib" location="${target}/lib"/>
+	<property name="target.src" location="${target}/src"/>
+	<property name="target.src.main" location="${target.src}/main"/>
+	<property name="target.src.main.java" location="${target.src.main}/java"/>
+	<property name="target.obs" value="${target}/obs"/>
+	<property name="datadir" location="/usr/share"/>
+	<property name="datadir.java" location="${datadir}/java"/>
+	<property name="datadir.javadoc" location="${datadir}/javadoc"/>
+	<property name="datadir.javadoc.java" location="${datadir.javadoc}/java"/>
+	<path id="classpath.main">
+		<pathelement path="${target.lib}/${project.name}.jar"/>
+		<pathelement path="${datadir.java}/ant.jar"/>
+		<pathelement path="/usr/lib64/jvm/java-1.8.0-openjdk-1.8.0/lib/tools.jar"/>
+	</path>
+
+	<!-- Import supplementary Ant projects -->
+	<import file="${src.ant}/obs.ant"/>
+
+	<!--taskdef name="xjc" classname="com.sun.tools.xjc.XJCTask">
+		<classpath>
+			<!- -fileset dir="../../lib" includes="*.jar" excludes="ant.jar"/- ->
+			<fileset dir="../../..">
+				<include name="./jaxb-xjc-2.0.5.jar"/>
+				<include name="jwsdp-shared/lib/**/*.jar"/>
+			</fileset>
+		</classpath>
+	</taskdef-->
+
+	<target name="compile"
+		description="Compile sources"
+		depends="compile.java"
+		/>
+
+	<target name="compile.java"
+			description="Compile Java sources"
+			>
+		<mkdir dir="${target.classes}"/>
+		<javac
+			srcdir="${src.main.java}"
+			destdir="${target.classes}"
+			source="1.8"
+			target="1.8"
+			includeantruntime="false"
+			encoding="UTF-8"
+			>
+			<!--compilerarg value="-Xlint"/-->
+			<!--compilerarg value="-Xdoclint"/-->
+			<classpath refid="classpath.main"/>
+			<compilerarg value="-Xdiags:verbose"/>
+		</javac>
+	</target>
+
+	<target name="jar"
+		description="Build Jar"
+		depends="compile">
+		<jar
+			jarfile="${target.lib}/${project.name}-${project.version}.jar"
+			basedir="${target.classes}"
+			>
+		</jar>
+		<symlink
+			resource="${project.name}-${project.version}.jar"
+			link="${target.lib}/${project.name}.jar"
+			overwrite="true"
+			/>
+	</target>
+
+	<target name="clean" description="Clean build directory">
+		<delete dir="${target}"/>
+	</target>
+
+	<target name="apidocs"
+		description="Build API documentation"
+		depends="jar"
+		>
+		<javadoc
+				sourcepath="${src.main.java}:${target.src.main.java}"
+				destdir="${target.doc.apidocs}"
+				access="public"
+				encoding="UTF-8"
+				charset="UTF-8"
+				windowtitle="Makaak ${project.version}"
+				>
+			<classpath refid="classpath.main"/>
+			<arg value="-Xdoclint:missing,reference"/>
+			<link href="${datadir.javadoc.java}"/>
+			<link href="${datadir}/doc/openjdk-8-jre-headless/api"/><!-- For Debian -->
+		</javadoc>
+	</target>
+	
+	<target name="dist.tar" description="Make Tar distribution">
+		<exec outputproperty="git.stashname" executable="git">
+			<arg value="stash"/>
+			<arg value="create"/>
+		</exec>
+		<condition property="git.stashname" value="HEAD">
+			<length string="${git.stashname}" length="0"/>
+		</condition>
+		<echo>${git.stashname}</echo>
+		<exec executable="git">
+			<arg value="archive"/>
+			<arg value="--prefix"/>
+			<arg value="${project.name}-${project.version}/"/>
+			<arg value="--output"/>
+			<arg value="${target}/${project.name}-${project.version}.tar.gz"/>
+			<arg value="${git.stashname}"/>
+			<arg value="--"/>
+			<arg value="build.xml"/>
+			<arg value="src"/>
+			<arg value="README"/>
+			<arg value="LICENSE"/>
+			<arg value="AUTHORS"/>
+		</exec>
+	</target>
+
+	<target name="test"
+		description="Perform unit tests"
+		depends="jar"
+		>
+		<taskdef name="xjc"
+			classname="coneforest.ant.xjc.Xjc"
+			classpathref="classpath.main"
+			/>
+		<xjc
+			package="MAKAAK"
+			verbose="yes"
+			schema="makaak.xsd"
+			>
+		</xjc>
+	</target>
+
+</project>

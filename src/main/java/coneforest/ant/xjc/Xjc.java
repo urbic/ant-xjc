@@ -1,0 +1,335 @@
+package coneforest.ant.xjc;
+
+public class Xjc
+	extends org.apache.tools.ant.Task
+{
+	@Override
+	public void execute()
+	{
+		java.util.ArrayList<String> argList=new java.util.ArrayList<String>();
+
+		// Format
+		if(format!=null)
+			argList.add("-"+format);
+
+		// Readonly
+		if(readOnly)
+			argList.add("-readOnly");
+
+		// Verbose
+		if(verbose)
+			argList.add("-verbose");
+
+		// Extension
+		if(extension)
+			argList.add("-extension");
+
+		// Quiet
+		if(quiet)
+			argList.add("-quiet");
+
+		// No validate
+		if(noValidate)
+			argList.add("-nv");
+
+		// Enable introspection
+		if(enableIntrospection)
+			argList.add("-enableIntrospection");
+
+		// Enable introspection
+		if(disableXmlSecurity)
+			argList.add("-disableXmlSecurity");
+
+		// No package annotations
+		if(noPackageAnnotations)
+			argList.add("-npa");
+
+		// No package annotations
+		if(noHeader)
+			argList.add("-no-header");
+
+		// Content for wildcard
+		if(contentForWildcard)
+			argList.add("-contentForWildcard");
+
+		// Mark generated
+		if(markGenerated)
+			argList.add("-mark-generated");
+
+		// Package
+		if(_package!=null)
+		{
+			argList.add("-p");
+			argList.add(_package);
+		}
+
+		// Catalog
+		if(catalog!=null)
+		{
+			argList.add("-catalog");
+			argList.add(catalog);
+		}
+
+		// Class path
+		if(classpath!=null)
+		{
+			argList.add("-classpath");
+			argList.add(classpath);
+		}
+
+		// Encoding
+		if(encoding!=null)
+		{
+			argList.add("-encoding");
+			argList.add(encoding);
+		}
+
+		// HTTP proxy
+		if(httpProxy!=null)
+		{
+			argList.add("-httpproxy");
+			argList.add(httpProxy);
+		}
+
+		// HTTP proxy file
+		if(httpProxy!=null)
+		{
+			argList.add("-httpproxyfile");
+			argList.add(httpProxyFile);
+		}
+
+		// Output directory
+		if(destdir!=null)
+		{
+			argList.add("-d");
+			argList.add(destdir);
+		}
+
+		// Target
+		if(target!=null)
+		{
+			argList.add("-target");
+			argList.add(target);
+		}
+
+		// Schema
+		if(schema!=null)
+			argList.add(schema);
+
+		final String[] args=argList.toArray(new String[0]);
+
+		try
+		{
+			com.sun.tools.internal.xjc.XJCFacade.main(args);
+		}
+		catch(final Throwable e)
+		{
+		}
+	}
+
+	public void setDestdir(final String value)	{ destdir=value; }
+
+	public void setSchema(final String value)	{ schema=value; }
+
+	public void setClasspath(final String value)	{ classpath=value; }
+
+	public void setBinding(final String value)	{ binding=value; }
+
+	public void setPackage(final String value)	{ _package=value; }
+
+	public void setTarget(final String value)	{ target=value; }
+
+	public void setReadonly(final boolean value)	{ readOnly=value; }
+
+	public void setVerbose(final boolean value) { verbose=value; }
+
+	public void setQuiet(final boolean value)	{ quiet=value; }
+
+	public void setEnableIntrospection(final boolean value)	{ enableIntrospection=value; }
+
+	public void setContentForWildcard(final boolean value)	{ contentForWildcard=value; }
+
+	public void setDisableXmlSecurity(final boolean value)	{ disableXmlSecurity=value; }
+
+	public void setNoValidate(final boolean value)	{ noValidate=value; }
+
+	public void setNoGeader(final boolean value)	{ noHeader=value; }
+
+	public void setFormat(final String value)
+	{
+		if(value.equals("xmlschema")
+				|| value.equals("relaxng")
+				|| value.equals("relaxng-compact")
+				|| value.equals("dtd")
+				|| value.equals("wsdl"))
+			format=value;
+		else
+			; // TODO
+	}
+
+	public void setExtension(final boolean value)	{ extension=value; }
+
+	public void setMarkGenerated(final boolean value)	{ markGenerated=value; }
+
+	public void setCatalog(final String value)	{ catalog=value; }
+
+	public void setHttpProxy(final String value)	{ httpProxy=value; }
+
+	public void setHttpProxyFile(final String value)	{ httpProxyFile=value; }
+
+	public void setEncoding(final String value)	{ encoding=value; }
+
+	public void setRemoveOldInput(final String value)	{ removeOldInput=value; }
+
+	public Arg createArg()
+	{
+		final Arg arg=new Arg();
+		argList.add(arg);
+		return arg;
+	}
+
+	private final java.util.ArrayList<Arg> argList
+		=new java.util.ArrayList<Arg>();
+
+	private String
+		destdir,
+		schema,
+		binding,
+		_package,
+		target,
+		stackSize,
+		catalog,
+		removeOldInput,
+		format,
+		httpProxy,
+		httpProxyFile,
+		encoding,
+		classpath;
+
+	boolean
+		extension,
+		readOnly,
+		verbose,
+		quiet,
+		noValidate,
+		noPackageAnnotations,
+		noHeader,
+		contentForWildcard,
+		enableIntrospection,
+		disableXmlSecurity,
+		markGenerated;
+
+	public class Schema
+	{
+		public Schema()
+		{
+		}
+
+		public void setValue(final String value)
+		{
+			this.value=value;
+		}
+
+		public String getValue()
+		{
+			return value;
+		}
+
+		private String value;
+	}
+
+	public class Binding
+	{
+		public Binding()
+		{
+		}
+
+		public void setValue(final String value)
+		{
+			this.value=value;
+		}
+
+		public String getValue()
+		{
+			return value;
+		}
+
+		private String value;
+	}
+
+	public class Classpath
+	{
+		public Classpath()
+		{
+		}
+
+		public void setValue(final String value)
+		{
+			this.value=value;
+		}
+
+		public String getValue()
+		{
+			return value;
+		}
+
+		private String value;
+	}
+
+	public class Arg
+	{
+		public Arg()
+		{
+		}
+
+		public void setValue(final String value)
+		{
+			this.value=value;
+		}
+
+		public String getValue()
+		{
+			return value;
+		}
+
+		private String value;
+	}
+
+	public class Depends
+	{
+		public Depends()
+		{
+		}
+
+		public void setValue(final String value)
+		{
+			this.value=value;
+		}
+
+		public String getValue()
+		{
+			return value;
+		}
+
+		private String value;
+	}
+
+	public class Produces
+	{
+		public Produces()
+		{
+		}
+
+		public void setValue(final String value)
+		{
+			this.value=value;
+		}
+
+		public String getValue()
+		{
+			return value;
+		}
+
+		private String value;
+	}
+}
