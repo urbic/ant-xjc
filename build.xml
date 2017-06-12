@@ -34,6 +34,7 @@
 	<!-- Import supplementary Ant projects -->
 	<import file="${src.ant}/obs.ant"/>
 	<import file="${src.ant}/docs.ant"/>
+	<import file="${src.ant}/test.ant"/>
 
 	<target name="compile"
 		description="Compile sources"
@@ -136,38 +137,6 @@
 			<arg value="LICENSE"/>
 			<arg value="AUTHORS"/>
 		</exec>
-	</target>
-
-	<target name="test"
-		description="Perform unit tests"
-		depends="jar"
-		>
-		<!--taskdef name="xjc"
-			classname="coneforest.ant.xjc.Xjc"
-			classpathref="classpath.main"
-			/-->
-		<taskdef
-			resource="coneforest/ant/xjc/antlib.xml"
-			classpathref="classpath.main"
-			/>
-		
-		<mkdir dir="${target.src.test.java}"/>
-		<echo>Testcase: schema in attribute</echo>
-		<xjc
-			verbose="yes"
-			schema="${src.test.xsd}/test-1.xsd"
-			destdir="${target.src.test.java}"
-			>
-		</xjc>
-		<echo>Testcase: nested schema</echo>
-		<xjc
-			verbose="yes"
-			destdir="${target.src.test.java}"
-			>
-			<schema>
-				<fileset dir="${src.test.xsd}" includes="*.xsd"/>
-			</schema>
-		</xjc>
 	</target>
 
 </project>

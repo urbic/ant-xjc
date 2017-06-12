@@ -5,6 +5,7 @@ public class Xjc
 {
 	@Override
 	public void execute()
+		throws org.apache.tools.ant.BuildException
 	{
 		java.util.ArrayList<String> argList=new java.util.ArrayList<String>();
 
@@ -112,19 +113,35 @@ public class Xjc
 			argList.add(target);
 		}
 
+		// Binding
+		for(String item: binding)
+		{
+			argList.add("-b");
+			argList.add(item);
+		}
+
 		// Schema
 		argList.addAll(schema);
 
-		final String[] args=argList.toArray(new String[0]);
-
 		try
 		{
-			//com.sun.tools.internal.xjc.XJCFacade.main(args);
-			com.sun.tools.internal.xjc.Driver.run(args, System.out, System.out);
+			int ret=com.sun.tools.internal.xjc.Driver.run(argList.toArray(new String[0]), System.out, System.out);
+			if(ret!=0)
+				throw new org.apache.tools.ant.BuildException();
 		}
-		catch(final Throwable e)
+		catch(final org.apache.tools.ant.BuildException e)
 		{
-			e.printStackTrace();
+			if(failOnError)
+				throw e;
+			else
+				System.err.println("[ERROR] "+e.getMessage());
+		}
+		catch(final Exception e)
+		{
+			if(failOnError)
+				throw new org.apache.tools.ant.BuildException(e.getMessage());
+			else
+				System.err.println("[ERROR] "+e.getMessage());
 		}
 	}
 
@@ -133,8 +150,6 @@ public class Xjc
 	public void setSchema(final String value)	{ this.schema.add(value); }
 
 	public void setClasspath(final String value)	{ classpath=value; }
-
-	public void setBinding(final String value)	{ binding=value; }
 
 	public void setPackage(final String value)	{ _package=value; }
 
@@ -170,6 +185,8 @@ public class Xjc
 
 	public void setExtension(final boolean value)	{ extension=value; }
 
+	public void setFailOnError(final boolean value)	{ failOnError=value; }
+
 	public void setMarkGenerated(final boolean value)	{ markGenerated=value; }
 
 	public void setCatalog(final String value)	{ catalog=value; }
@@ -195,10 +212,10 @@ public class Xjc
 		=new java.util.ArrayList<Arg>();
 
 	private java.util.ArrayList<String> schema=new java.util.ArrayList<String>();
+	private java.util.ArrayList<String> binding=new java.util.ArrayList<String>();
 
 	private String
 		destdir,
-		binding,
 		_package,
 		target,
 		stackSize,
@@ -221,14 +238,45 @@ public class Xjc
 		contentForWildcard,
 		enableIntrospection,
 		disableXmlSecurity,
-		markGenerated;
+		markGenerated,
+		failOnError;
 
 	public static class Schema
 		implements org.apache.tools.ant.types.ResourceCollection
-		//extends org.apache.tools.ant.types.
-		//extends org.apache.tools.ant.types.DataType
 	{
 		public Schema()
+		{
+		}
+
+		public boolean isFilesystemOnly()
+		{
+			return false;
+		}
+
+		public int size()
+		{
+			return resources.size();
+		}
+
+		public java.util.Iterator<org.apache.tools.ant.types.Resource> iterator()
+		{
+			return resources.iterator();
+		}
+	
+		public void addConfiguredFileSet(final org.apache.tools.ant.types.FileSet fileSet)
+		{
+			for(org.apache.tools.ant.types.Resource item: fileSet)
+				resources.add(item);
+		}
+
+		private java.util.ArrayList<org.apache.tools.ant.types.Resource> resources
+			=new java.util.ArrayList<org.apache.tools.ant.types.Resource>();
+	}
+
+	public static class Binding
+		implements org.apache.tools.ant.types.ResourceCollection
+	{
+		public Binding()
 		{
 		}
 
@@ -263,23 +311,10 @@ public class Xjc
 			this.schema.add(item.toString());
 	}
 
-	public class Binding
+	public void addConfiguredBinding(final Binding binding)
 	{
-		public Binding()
-		{
-		}
-
-		public void setValue(final String value)
-		{
-			this.value=value;
-		}
-
-		public String getValue()
-		{
-			return value;
-		}
-
-		private String value;
+		for(org.apache.tools.ant.types.Resource item: binding)
+			this.binding.add(item.toString());
 	}
 
 	public class Classpath

@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<project name="test" basedir=".">
+
+	<target name="test"
+		description="Perform unit tests"
+		depends="jar"
+		>
+		<!--taskdef name="xjc"
+			classname="coneforest.ant.xjc.Xjc"
+			classpathref="classpath.main"
+			/-->
+		<taskdef
+			resource="coneforest/ant/xjc/antlib.xml"
+			classpathref="classpath.main"
+			/>
+
+		<mkdir dir="${target.src.test.java}"/>
+		
+		<echo>Testcase: schema in attribute</echo>
+		<xjc
+			verbose="yes"
+			schema="${src.test.xsd}/test-1.xsd"
+			destdir="${target.src.test.java}"
+			>
+		</xjc>
+		
+		<echo>Testcase: nested schema</echo>
+		<xjc
+			verbose="yes"
+			destdir="${target.src.test.java}"
+			>
+			<schema>
+				<fileset dir="${src.test.xsd}" includes="**/*.xsd"/>
+			</schema>
+		</xjc>
+		
+		<echo>Testcase: non-existent schema</echo>
+		<xjc
+			verbose="yes"
+			destdir="${target.src.test.java}"
+			failonerror="false"
+			>
+			<schema>
+				<fileset dir="${src.test.xsd}" includes="DUMMY.xsd"/>
+			</schema>
+		</xjc>
+	</target>
+
+</project>

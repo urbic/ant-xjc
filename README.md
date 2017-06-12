@@ -80,6 +80,9 @@ suppress compiler output
 * `verbose`
 be extra verbose
 
+* `failonerror`
+indicates whether compilation errors will fail the build; defaults to `"true"`
+
 * `target`
 behave like XJC 2.0 or 2.1 and generate code that doesn’t use any 2.2 features
 	* `"2.0"`
@@ -103,7 +106,15 @@ suppress generation of package level annotations (`**/package-info.java`)
 
 ### Nested elements
 
-_Not implemented yet._
+* **`schema`**
+
+Can contain arbitrary _resource collection_ elements.
+
+```xml
+<xjc>
+	<fileset dir="${src.main.xsd}" includes="**/*.xsd"/>
+</xjc>
+```
 
 ## License
 
