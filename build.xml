@@ -7,6 +7,7 @@
 	<property name="src.main" location="${src}/main"/>
 	<property name="src.main.java" location="${src.main}/java"/>
 	<property name="src.main.xsd" location="${src.main}/xsd"/>
+	<property name="src.main.resources" location="${src.main}/resources"/>
 	<property name="src.ant" location="${src}/ant"/>
 	<property name="src.test" location="${src}/test"/>
 	<property name="src.test.xsd" location="${src.test}/xsd"/>
@@ -58,9 +59,15 @@
 		</javac>
 	</target>
 
+	<target name="copy.resources">
+		<copy todir="${target.classes}">
+			<fileset dir="${src.main.resources}" includes="**"/>
+		</copy>
+	</target>
+
 	<target name="jar"
 		description="Build Jar"
-		depends="compile">
+		depends="compile,copy.resources">
 		<jar
 			jarfile="${target.lib}/${project.name}-${project.version}.jar"
 			basedir="${target.classes}"
@@ -135,8 +142,12 @@
 		description="Perform unit tests"
 		depends="jar"
 		>
-		<taskdef name="xjc"
+		<!--taskdef name="xjc"
 			classname="coneforest.ant.xjc.Xjc"
+			classpathref="classpath.main"
+			/-->
+		<taskdef
+			resource="coneforest/ant/xjc/antlib.xml"
 			classpathref="classpath.main"
 			/>
 		

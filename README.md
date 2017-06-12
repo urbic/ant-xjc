@@ -2,7 +2,7 @@
 
 This package contains optional **xjc** task for **Apache Ant**.
 
-[Apache Ant](http://ant.apache.org/) is a Java-based build tool.
+[Apache Ant™](http://ant.apache.org/) is a Java-based build tool.
 
 ## Description
 
@@ -11,8 +11,7 @@ This package contains optional **xjc** task for **Apache Ant**.
 ```xml
 …
 <taskdef
-	name="xjc"
-	classname="coneforest.ant.xjc.Xjc"
+	resource="coneforest/ant/xjc/antlib.xml"
 	classpathref="classpath.main"
 	/>
 <xjc
@@ -31,12 +30,6 @@ schema (file/URL/dir/jar)
 * `destdir`
 generated files will go into this directory
 
-* `extension`
-allow vendor extensions — do not strictly follow the Compatibility Rules and App E.2 from the JAXB Spec
-
-* `enableIntrospection`
-enable correct generation of Boolean getters/setters to enable Bean Introspection apis
-
 * `package`
 specifies the target package
 
@@ -46,6 +39,12 @@ XCatalog, and OASIS XML Catalog format
 
 * `classpath`
 specify where to find user class files
+
+* `extension`
+allow vendor extensions — do not strictly follow the Compatibility Rules and App E.2 from the JAXB Spec
+
+* `enableIntrospection`
+enable correct generation of Boolean getters/setters to enable Bean Introspection apis
 
 * `readonly`
 generated files will be in read-only mode

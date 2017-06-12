@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<antlib>
+    <!-- typedef the tasks that work for ant less than 1.6 -->
+    <taskdef resource="coneforest/ant/xjc/xjc.properties"/>
+
+    <taskdef
+        name="xjc"
+        classname="coneforest.ant.xjc.Xjc"
+        onerror="ignore"/>
+
+</antlib>
