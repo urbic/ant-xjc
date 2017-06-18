@@ -19,7 +19,7 @@ Name:           @obs.package.name@
 Version:		@obs.package.version@
 Release:		0
 License:		Zlib
-Summary:		Optional xjc task for ant
+Summary:		Optional XJC task for ant
 Url:			https://github.com/urbic/%{name}
 Group:			Development/Tools/Building
 Source:			%{name}-%{version}.tar.xz
@@ -28,11 +28,6 @@ BuildRequires:	java-devel >= 1.8.0
 BuildRequires:	java-1_8_0-openjdk-devel >= 1.8.0
 BuildRequires:	java-javadoc >= 1.8.0
 BuildRequires:	pandoc
-BuildRequires:	texlive-collection-luatex
-BuildRequires:	texlive-collection-latex
-BuildRequires:	texlive-fancyvrb
-BuildRequires:	liberation-fonts
-BuildRequires:	texlive-euenc
 Provides:		config(ant-%{name})
 Requires:		java >= 1.8.0
 Requires:		java-1_8_0-openjdk-devel >= 1.8.0
@@ -42,18 +37,25 @@ BuildArch:		noarch
 %description
 Apache Ant is a Java-based build tool.
 
-This package contains optional xjc task for Apache Ant.
+This package contains optional XJC task for Apache Ant.
+
+%package javadoc
+Summary:		Javadocs for %{name}
+Group:			Documentation
+BuildRequires:	ant-javadoc
+Requires:		jpackage-utils
+
+%description javadoc
+This package contains the API documentation for %{name}.
 
 %prep
 %setup -q
 
 %build
-LANG=ru_RU.UTF-8 \
-	%{ant} build
+%{ant} build
 
 %check
-LANG=ru_RU.UTF-8 \
-	%{ant} test
+%{ant} test
 
 %install
 %{__install} -d %{buildroot}%{_javadir}/ant
@@ -66,7 +68,9 @@ LANG=ru_RU.UTF-8 \
 %{__install} -d %{buildroot}%{_sysconfdir}/ant.d
 echo "%{name} ant/%{name}" > %{buildroot}%{_sysconfdir}/ant.d/%{name}
 %{__install} -d %{buildroot}%{_docdir}/%{name}
-%{__install} -m 644 target/doc/%{name}.pdf %{buildroot}%{_docdir}/%{name}
+%{__install} -m 644 target/doc/README.xhtml %{buildroot}%{_docdir}/%{name}
+%{__install} -d %{buildroot}%{_javadocdir}/%{name}
+%{__cp} -pr target/doc/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 
 %clean
 %{__rm} -rf %{buildroot}
@@ -77,5 +81,9 @@ echo "%{name} ant/%{name}" > %{buildroot}%{_sysconfdir}/ant.d/%{name}
 %{_datadir}/ant/lib/%{name}.jar
 %config %{_sysconfdir}/ant.d/*
 %{_docdir}/%{name}
+
+%files javadoc
+%defattr(0644,root,root,0755)
+%{_javadocdir}/%{name}
 
 %changelog

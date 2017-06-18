@@ -1,3 +1,5 @@
 Apache Ant is a Java-based build tool.
 
-This package contains optional xjc tasks for Apache Ant.
+This package contains optional XJC tasks for Apache Ant.
+
+See README.xhtml for details.

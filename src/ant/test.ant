@@ -6,7 +6,7 @@
 		depends="jar"
 		>
 		<!--taskdef name="xjc"
-			classname="coneforest.ant.xjc.Xjc"
+			classname="coneforest.ant.xjc.XjcTask"
 			classpathref="classpath.main"
 			/-->
 		<taskdef
@@ -15,7 +15,7 @@
 			/>
 
 		<mkdir dir="${target.src.test.java}"/>
-		
+
 		<echo>Testcase: schema in attribute</echo>
 		<xjc
 			verbose="yes"
@@ -23,7 +23,7 @@
 			destdir="${target.src.test.java}"
 			>
 		</xjc>
-		
+
 		<echo>Testcase: nested schema</echo>
 		<xjc
 			verbose="yes"
@@ -33,7 +33,7 @@
 				<fileset dir="${src.test.xsd}" includes="**/*.xsd"/>
 			</schema>
 		</xjc>
-		
+
 		<echo>Testcase: schema as directory</echo>
 		<xjc
 			verbose="yes"
@@ -64,6 +64,28 @@
 				<fileset dir="${src.test.xsd}" includes="DUMMY.xsd"/>
 			</schema>
 		</xjc>
+
+		<echo>Testcase: ClassPath</echo>
+		<xjc
+			verbose="yes"
+			destdir="${target.src.test.java}"
+			failonerror="false"
+			schema="${src.test.xsd}"
+			classpath="DUMMY1:DUMMY2"
+			/>
+
+		<echo>Testcase: ClassPathRef</echo>
+		<path id="test.classpath">
+			<pathelement path="DUMMY3"/>
+			<pathelement path="DUMMY4"/>
+		</path>
+		<xjc
+			verbose="yes"
+			destdir="${target.src.test.java}"
+			failonerror="false"
+			schema="${src.test.xsd}"
+			classpathref="test.classpath"
+			/>
 	</target>
 
 </project>

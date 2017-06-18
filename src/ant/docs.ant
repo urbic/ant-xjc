@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <project name="docs" basedir=".">
 
-	<target name="docs" depends="docs.pdf"/>
+	<target name="docs" depends="docs.xhtml"/>
 
 	<target name="docs.pdf">
 		<mkdir dir="${target.doc}"/>
@@ -9,8 +9,7 @@
 			<format property="TODAY" pattern="yyyy.MM.dd" locale="en,GB"/>
 		</tstamp>
 		<exec executable="pandoc">
-			<arg value="-M"/>
-			<arg value="title=Optional xjc task for ant"/>
+			<arg value="-Mtitle=Optional xjc task for ant"/>
 			<arg value="-Mauthor=Anton Shvetz"/>
 			<arg value="-Mdate=${TODAY}"/>
 			<arg value="-Vcolorlinks"/>
@@ -23,6 +22,18 @@
 			<arg value="-fmarkdown_github"/>
 			<arg value="-s"/>
 			<arg value="-o${target.doc}/${project.name}.pdf"/>
+			<arg value="README.md"/>
+		</exec>
+	</target>
+
+	<target name="docs.xhtml">
+		<mkdir dir="${target.doc}"/>
+		<exec executable="pandoc">
+			<arg value="-TOptional XJC task for Apache Ant"/>
+			<!--arg value="-fmarkdown_github+hard_line_breaks"/-->
+			<arg value="-fmarkdown_github"/>
+			<arg value="-s"/>
+			<arg value="-o${target.doc}/README.xhtml"/>
 			<arg value="README.md"/>
 		</exec>
 	</target>

@@ -2,7 +2,7 @@
 <schema
 	xmlns="http://www.w3.org/2001/XMLSchema"
 	xmlns:xs="http://www.w3.org/2001/XMLSchema"
-	xmlns:makaak="urn:coneforest:test-1"
+	xmlns:test="urn:coneforest:test-1"
 	targetNamespace="urn:coneforest:test-1"
 	elementFormDefault="qualified"
 	>
