@@ -114,23 +114,23 @@ Mark the generated code as `@javax.annotation.Generated`.
 
 * **`schema`**
 Specify schema. For each directory specified, all schema files in it will be compiled. This element can contain arbitrary _resource collection_ elements.
-```xml
+    ```xml
     <xjc destdir="${target.src.test.java}">
         <schema>
             <fileset dir="${src.main.xsd}" includes="**/*.xsd"/>
         </schema>
     </xjc>
-```
+    ```
 
 * **`binding`**
 Specify external bindings files. For each directory specified, all bindings files (`**/*.xjb`) in it will be searched. This element can contain arbitrary _resource collection_ elements.
-```xml
+    ```xml
     <xjc destdir="${target.src.test.java}">
         <binding>
             <fileset dir="${src.main.xsd}" includes="**/*.xjb"/>
         </binding>
     </xjc>
-```
+    ```
 
 ## License
 
