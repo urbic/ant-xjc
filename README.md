@@ -130,6 +130,13 @@ Specify external bindings files. For each directory specified, all bindings file
     </xjc>
     ```
 
+## Installation
+
+Pre-built binary packages for **openSUSE**, **Fedora**, **Debian** and
+**Ubuntu** are available at [openSUSE Build
+Service](https://software.opensuse.org/download.html?project=home%3Aconcyclic&package=ant-xjc).
+
+
 ## License
 
 This software and documentation are released under the [zlib/png](LICENSE) license.
