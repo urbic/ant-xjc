@@ -3,6 +3,7 @@
 This package contains optional **XJC** task for [**Apache Ant™**](http://ant.apache.org/), a Java-based build tool.
 
 [![License](https://img.shields.io/badge/license-zlib%2Fpng-blue.svg)](http://opensource.org/licenses/Zlib)
+[![Build Status](https://secure.travis-ci.org/urbic/ant-xjc.png)](http://travis-ci.org/urbic/ant-xjc)
 
 ## Description
 
