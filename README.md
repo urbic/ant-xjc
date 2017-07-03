@@ -1,8 +1,6 @@
 # **ant-xjc**
 
-This package contains optional **XJC** task for **Apache Ant™**.
-
-[Apache Ant](http://ant.apache.org/) is a Java-based build tool.
+This package contains optional **XJC** task for [**Apache Ant™**](http://ant.apache.org/), a Java-based build tool.
 
 [![License](https://img.shields.io/badge/license-zlib%2Fpng-blue.svg)](http://opensource.org/licenses/Zlib)
 
@@ -36,7 +34,7 @@ Generated files will go into this directory.
 Specifies the target package.
 
 * `catalog`
-Specify catalog files to resolve external entity references support [TR9401](https://www.oasis-open.org/specs/a401.htm), [XCatalog](http://xml.coverpages.org/XCatalog9807.html), and [OASIS XML Catalog](https://www.oasis-open.org/committees/entity/spec-2001-08-06.html) format.
+Specify catalog files to resolve external entity references. Support [TR9401](https://www.oasis-open.org/specs/a401.htm), [XCatalog](http://xml.coverpages.org/XCatalog9807.html), and [OASIS XML Catalog](https://www.oasis-open.org/committees/entity/spec-2001-08-06.html) format.
 
 * `classpath`
 Specify where to find user class files.

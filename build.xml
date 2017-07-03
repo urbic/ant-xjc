@@ -2,7 +2,7 @@
 <project name="ant-xjc" default="jar">
 
 	<property name="project.name" value="${ant.project.name}"/>
-	<property name="project.version" value="0.3"/>
+	<property name="project.version" value="0.4"/>
 	<property name="src" location="src"/>
 	<property name="src.main" location="${src}/main"/>
 	<property name="src.main.java" location="${src.main}/java"/>
@@ -36,6 +36,7 @@
 	<import file="${src.ant}/obs.ant"/>
 	<import file="${src.ant}/docs.ant"/>
 	<import file="${src.ant}/test.ant"/>
+	<import file="${src.ant}/install.ant"/>
 
 	<target name="compile"
 		description="Compile sources"
@@ -105,7 +106,7 @@
 				access="public"
 				encoding="UTF-8"
 				charset="UTF-8"
-				windowtitle="ant-xjc ${project.version}"
+				windowtitle="${project.name} ${project.version}"
 				>
 			<classpath refid="classpath.main"/>
 			<arg value="-Xdoclint:missing,reference"/>
@@ -116,6 +117,7 @@
 	</target>
 	
 	<target name="dist.tar" description="Make Tar distribution">
+		<mkdir dir="${target}"/>
 		<exec outputproperty="git.stashname" executable="git">
 			<arg value="stash"/>
 			<arg value="create"/>
@@ -123,13 +125,13 @@
 		<condition property="git.object" value="HEAD" else="${git.stashname}">
 			<length string="${git.stashname}" when="eq" length="0"/>
 		</condition>
-		<echo message="${git.stashname}"/>
+		<echo message="${git.object}"/>
 		<exec executable="git">
 			<arg value="archive"/>
 			<arg value="--prefix"/>
 			<arg value="${project.name}-${project.version}/"/>
 			<arg value="--output"/>
-			<arg value="${target}/${project.name}-${project.version}.tar.gz"/>
+			<arg value="${target}/${project.name}-${project.version}.tar.xz"/>
 			<arg value="${git.object}"/>
 			<arg value="--"/>
 			<arg value="build.xml"/>

@@ -19,30 +19,32 @@ Name:           @obs.package.name@
 Version:		@obs.package.version@
 Release:		0
 License:		Zlib
-Summary:		Optional XJC task for ant
+Summary:		Optional XJC task for Ant
 Url:			https://github.com/urbic/%{name}
 Group:			Development/Tools/Building
 Source:			%{name}-%{version}.tar.xz
 BuildRequires:	ant
 BuildRequires:	java-devel >= 1.8.0
-BuildRequires:	java-1_8_0-openjdk-devel >= 1.8.0
-BuildRequires:	java-javadoc >= 1.8.0
 BuildRequires:	pandoc
-Provides:		config(ant-%{name})
+#Provides:		config(%%{name})
 Requires:		java >= 1.8.0
 Requires:		java-1_8_0-openjdk-devel >= 1.8.0
 BuildRoot:		%{_tmppath}/%{name}-%{version}-build
 BuildArch:		noarch
+%if 0%{?fedora}
+BuildRequires:	java-1.8.0-openjdk-javadoc
+%endif
 
 %description
-Apache Ant is a Java-based build tool.
-
-This package contains optional XJC task for Apache Ant.
+This package contains optional XJC task for Apache Ant, a Java-based build tool.
 
 %package javadoc
 Summary:		Javadocs for %{name}
 Group:			Documentation
+%if 0%{?suse_version} != 1330
 BuildRequires:	ant-javadoc
+%endif
+BuildRequires:	java-javadoc >= 1.8.0
 Requires:		jpackage-utils
 
 %description javadoc
@@ -58,19 +60,7 @@ This package contains the API documentation for %{name}.
 %{ant} test
 
 %install
-%{__install} -d %{buildroot}%{_javadir}/ant
-%{__install} -d %{buildroot}%{_docdir}/%{name}
-%{__install} -m 644 target/lib/%{name}-%{version}.jar %{buildroot}%{_javadir}/ant
-%{__cp} -P target/lib/%{name}.jar %{buildroot}%{_javadir}/ant
-%{__install} -m 644 target/doc/{README,LICENSE,AUTHORS} %{buildroot}%{_docdir}/%{name}
-%{__install} -d %{buildroot}%{_datadir}/ant/lib
-%{__ln_s} ../../java/ant/%{name}.jar %{buildroot}%{_datadir}/ant/lib/%{name}.jar
-%{__install} -d %{buildroot}%{_sysconfdir}/ant.d
-echo "%{name} ant/%{name}" > %{buildroot}%{_sysconfdir}/ant.d/%{name}
-%{__install} -d %{buildroot}%{_docdir}/%{name}
-%{__install} -m 644 target/doc/README.xhtml %{buildroot}%{_docdir}/%{name}
-%{__install} -d %{buildroot}%{_javadocdir}/%{name}
-%{__cp} -pr target/doc/apidocs/* %{buildroot}%{_javadocdir}/%{name}
+%{ant} install -Ddestdir=%{buildroot} -Dinstall.docdir=%{_docdir}/%{name}
 
 %clean
 %{__rm} -rf %{buildroot}

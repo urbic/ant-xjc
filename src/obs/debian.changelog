@@ -1,0 +1,5 @@
+ant-xjc (@obs.package.version@-0) stable; urgency=low
+
+  * Initial release.
+
+ -- MAINTAINER <tz@sectorb.msk.ru>  Sat, 02 Jul 2017 15:04:00 +0300
