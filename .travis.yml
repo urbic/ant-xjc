@@ -1,0 +1,18 @@
+language: java
+
+dist: trusty
+
+group: edge
+
+sudo: required
+
+jdk:
+    - oraclejdk8
+
+#install: ant -v test
+
+addons:
+  apt:
+    packages:
+      - ant-doc
+
